@@ -63,7 +63,7 @@
                      console.info(`Total records matching the attributes are ${filteredUsers.length}`);
                      fs.writeFileSync(`${__dirname}/output.json`, JSON.stringify(filteredUsers), { encoding: 'utf8' });
                  } catch (e) {
-                    console.error(`Error while fetching users from the cognito pool ${cognitoPoolId} in a region ${REGION}`);
+                    console.error(`Error while fetching users from the cognito pool ${cognitoPoolId} in a region ${region}`);
                     console.error(`${e}`);
                      return;
                  }
