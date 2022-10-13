@@ -7,7 +7,6 @@
  */
 
  const fs = require("fs");
- const path = require('path');
  const log = require('loglevel');
  const { program } = require('commander');
  const { CognitoIdentityProviderClient, ListUsersCommand } = require("@aws-sdk/client-cognito-identity-provider");
