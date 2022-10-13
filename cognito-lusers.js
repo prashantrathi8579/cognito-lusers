@@ -63,12 +63,12 @@
                      console.info(`Total records matching the attribute out of ${limit} are ${filteredUsers.length}`);
                      fs.writeFileSync(`${__dirname}/output.json`, JSON.stringify(filteredUsers), { encoding: 'utf8' });
                  } catch (e) {
-                    console.error(chalk.red(`Error while fetching users from the cognito pool ${cognitoPoolId} in a region ${REGION}`));
-                    console.error(chalk.red(`${e}`));
+                    console.error(`Error while fetching users from the cognito pool ${cognitoPoolId} in a region ${REGION}`);
+                    console.error(`${e}`);
                      return;
                  }
              } else {
-                console.error(chalk.red(`Error in creating CognitoIdentityProviderClient client`));
+                console.error(`Error in creating CognitoIdentityProviderClient client`);
              }
          };
          run();
