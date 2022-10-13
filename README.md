@@ -39,6 +39,4 @@ If one attribute is provided as shown in the command 2 above, value data will be
 ### Limitations
 This script output the result in a json file (output.json) at the current location of the project file.
 
-Anyone can use this utility script without any restrictions and allowed to modify based on their need. 
-If you like the utility; please do not forget to give stars.
-
+Anyone can use this utility script without any restrictions and allowed to modify based on their need.
