@@ -20,12 +20,11 @@
      .requiredOption('--secretKey <string>', 'AWS secret key')
      .requiredOption('-r --region <string>', 'AWS region to query')
      .requiredOption('-id --cognitoPoolId <string>', 'cognito pool id')
-     .requiredOption('-atr --attribute <string>', 'attribute on which filtering will happen. You can have custom attribute')
+     .requiredOption('-atr --attributes <string...>', 'attributes on which filtering will happen')
      .requiredOption('-l --limit <number>', 'limit to fetch the number of users info')
-     .option('-v --attributeValue <string>', 'value can be provided to filter attribute based on given value too')
+     .option('-v --attributeValue <string>', 'value can be provided to filter an attribute based on a given value')
      .action(function (options) {
-         const { accessKey, secretKey, region, cognitoPoolId, attribute, limit, attributeValue } = options;
- 
+         const { accessKey, secretKey, region, cognitoPoolId, attributes, limit, attributeValue } = options;
          const client = new CognitoIdentityProviderClient({
              region,
              credentials: {
@@ -46,7 +45,9 @@
                      usersList.Users.forEach(user => {
                          if (user.Enabled) {
                              const found = user.Attributes.filter(attr => {
-                                 if (attr.Name === attribute) {
+                                 if (attributes.length > 1) {
+                                    return attributes.includes(attr.Name);
+                                 } else if (attr.Name === attributes[0]) {
                                      if (attributeValue) {
                                          return attr.Value === attributeValue;
                                      }
@@ -59,7 +60,7 @@
                              }
                          }
                      });
-                     console.info(`Total records matching the attribute out of ${limit} are ${filteredUsers.length}`);
+                     console.info(`Total records matching the attributes are ${filteredUsers.length}`);
                      fs.writeFileSync(`${__dirname}/output.json`, JSON.stringify(filteredUsers), { encoding: 'utf8' });
                  } catch (e) {
                     console.error(`Error while fetching users from the cognito pool ${cognitoPoolId} in a region ${REGION}`);
@@ -74,5 +75,3 @@
      });
  
  program.parse(process.argv);
- 
- 
