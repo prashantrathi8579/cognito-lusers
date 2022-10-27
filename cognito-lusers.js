@@ -23,8 +23,9 @@
      .requiredOption('-atr --attributes <string...>', 'attributes on which filtering will happen')
      .requiredOption('-l --limit <number>', 'limit to fetch the number of users info')
      .option('-v --attributeValue <string>', 'value can be provided to filter an attribute based on a given value')
+     .option('-p --paginationToken <string>', 'pagination value')
      .action(function (options) {
-         const { accessKey, secretKey, region, cognitoPoolId, attributes, limit, attributeValue } = options;
+         const { accessKey, secretKey, region, cognitoPoolId, attributes, limit, attributeValue, paginationToken } = options;
          const client = new CognitoIdentityProviderClient({
              region,
              credentials: {
@@ -38,7 +39,8 @@
                  try {
                      const command = new ListUsersCommand({
                          UserPoolId: cognitoPoolId,
-                         Limit: Number(limit)
+                         Limit: Number(limit),
+                         PaginationToken: paginationToken
                      });
                      const usersList = await client.send(command);
                      let filteredUsers = [];
